@@ -1,0 +1,129 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --font-family: Arial, sans-serif;
+    --spacing-small: 1rem;
+    --spacing-large: 2rem;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+}
+
+.hero {
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content {
+    padding: var(--spacing-large);
+}
+
+.cta-button {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    margin: 0.5rem;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: darken(var(--primary-color), 10%);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-small);
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.feature, .testimonial {
+    padding: var(--spacing-small);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: auto;
+}
+
+input, select, textarea, button {
+    margin-bottom: var(--spacing-small);
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover, button:focus {
+    background: darken(var(--primary-color), 10%);
+    outline: 2px solid #000;
+}
+
+.diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.block {
+    padding: 1rem;
+    border: 1px solid #000;
+    background: #f8f9fa;
+}
+
+.arrow {
+    font-size: 2rem;
+}
+
+section {
+    padding: var(--spacing-large);
+    text-align: center;
+}
+
+footer {
+    background: #f8f9fa;
+    padding: var(--spacing-small);
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+nav a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+/* Accessibility */
+a:focus, button:focus, input:focus {
+    outline: 2px solid var(--primary-color);
+}
