@@ -1,0 +1,7 @@
+Quick Launch Steps:
+1. Create Replit account/project (HTML/CSS/JS).
+2. Upload all files.
+3. Run the project – view at Replit's preview URL.
+4. For forms: Sign up for n8n.io, create webhook workflow (HTTP node -> actions), copy webhook URL to js/app.js.
+5. Test forms; they POST JSON to webhook.
+6. Connect real APIs as per comments in app.js for full functionality.
