@@ -1,46 +1,106 @@
+<!-- pricing.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IoT AI Automation - Pricing</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Pricing - Kaizen Automation Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <header class="hero" style="background-image: url('https://images.unsplash.com/photo-1556740714-a8395b3bf30f?w=1600&q=80&auto=format&fit=crop');">
-        <div class="hero-content">
-            <h1>Pricing Plans</h1>
-            <p>Choose the right plan for your business</p>
-        </div>
+    <header class="sticky-nav">
+        <!-- Same nav -->
     </header>
 
-    <section class="pricing-table">
-        <table>
-            <thead>
-                <tr><th>Feature</th><th>Starter (₹499/mo)</th><th>Pro (₹1,499/mo)</th><th>Enterprise (Custom)</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>AI Automations</td><td>Basic</td><td>Advanced</td><td>Unlimited</td></tr>
-                <tr><td>IoT Devices</td><td>5</td><td>50</td><td>Unlimited</td></tr>
-                <tr><td>Support</td><td>Email</td><td>Priority</td><td>24/7</td></tr>
-            </tbody>
-        </table>
-        <button id="signup-button">Sign Up</button>
+    <section class="pricing-tables">
+        <div class="price-card">
+            <h3>Starter</h3>
+            <p>₹999/mo</p>
+            <ul>
+                <li>WhatsApp bot</li>
+                <li>Basic automations</li>
+                <li>5 workflows</li>
+                <li>Email support</li>
+            </ul>
+            <a href="contact.html" class="cta-btn">Get Started</a>
+        </div>
+        <div class="price-card">
+            <h3>Growth</h3>
+            <p>₹2,999/mo</p>
+            <ul>
+                <li>AI calling agent</li>
+                <li>CRM automations</li>
+                <li>20 workflows</li>
+                <li>Priority support</li>
+            </ul>
+            <a href="contact.html" class="cta-btn">Get Started</a>
+        </div>
+        <div class="price-card">
+            <h3>Pro</h3>
+            <p>₹9,999/mo</p>
+            <ul>
+                <li>Voice AI + WhatsApp + automation + IoT alerting</li>
+                <li>100 workflows</li>
+                <li>Custom dashboards</li>
+            </ul>
+            <a href="contact.html" class="cta-btn">Get Started</a>
+        </div>
+        <div class="price-card">
+            <h3>Enterprise</h3>
+            <p>Contact for pricing</p>
+            <ul>
+                <li>Unlimited workflows</li>
+                <li>Full technical support</li>
+                <li>Custom integrations</li>
+                <li>IoT device connectivity</li>
+            </ul>
+            <a href="contact.html" class="cta-btn">Contact Us</a>
+        </div>
     </section>
 
-    <dialog id="signup-modal" aria-modal="true">
-        <form id="signup-form">
-            <label for="name">Name:</label><input type="text" id="name" required>
-            <label for="email">Email:</label><input type="email" id="email" required>
-            <label for="business">Business Type:</label><input type="text" id="business">
-            <label for="plan">Plan:</label><select id="plan"><option>Starter</option><option>Pro</option><option>Enterprise</option></select>
-            <button type="submit">Submit</button>
-            <button type="button" id="close-modal">Close</button>
-        </form>
-    </dialog>
+    <section class="comparison">
+        <h2>Comparison Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Starter</th>
+                    <th>Growth</th>
+                    <th>Pro</th>
+                    <th>Enterprise</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Add rows for features -->
+                <tr>
+                    <td>Workflows</td>
+                    <td>5</td>
+                    <td>20</td>
+                    <td>100</td>
+                    <td>Unlimited</td>
+                </tr>
+                <!-- ... -->
+            </tbody>
+        </table>
+    </section>
 
-    <footer><!-- Same as index --></footer>
+    <section class="faq">
+        <h2>FAQ</h2>
+        <div class="accordion">
+            <!-- Add accordion items with details/summary -->
+            <details>
+                <summary>What is included in Starter?</summary>
+                <p>Basic features...</p>
+            </details>
+            <!-- More -->
+        </div>
+    </section>
 
-    <script src="js/app.js"></script>
+    <footer>
+        <!-- Same -->
+    </footer>
+
+    <script src="assets/js/app.js"></script>
 </body>
 </html>
