@@ -1,169 +1,293 @@
-<!-- index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaizen Automation Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kaizen Automation Hub — Dashboard</title>
+
+  <!-- Fonts (keep your existing font links if you already have them) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Basic variables ---------- */
+    :root{
+      --bg:#0b0f13;
+      --panel:#0f1518;
+      --muted:#98a3ad;
+      --accent1: linear-gradient(135deg,#6ef0ff 0%, #7a6bff 50%, #b45cff 100%);
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --neon:#6ef0ff;
+      --radius:14px;
+      --card-shadow: 0 10px 30px rgba(3,6,10,0.6);
+      --max-width:1200px;
+    }
+
+    /* ---------- Reset ---------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#e7eef8;background:
+      radial-gradient(800px 400px at 10% 10%, rgba(110,240,255,0.02), transparent),
+      radial-gradient(600px 300px at 90% 80%, rgba(180,92,255,0.01), transparent),
+      var(--bg); -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.45;}
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* ---------- layout ---------- */
+    .app {
+      display:flex;
+      min-height:100vh;
+      gap:28px;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+      width:260px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-right:1px solid var(--glass-2);
+      padding:28px 18px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      position:sticky;
+      top:0;
+      height:100vh;
+    }
+    .brand {font-family:Poppins,Inter;font-weight:700;font-size:20px;color:transparent;background:linear-gradient(90deg,var(--neon),#b45cff);-webkit-background-clip:text}
+    .sidebar nav{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+    .nav-link{
+      padding:10px 12px;border-radius:10px;color:var(--muted);font-weight:600;font-size:14px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .nav-link.active, .nav-link:hover{background:rgba(255,255,255,0.02);color:#fff}
+
+    /* MAIN CONTENT */
+    .main {
+      flex:1;
+      padding:28px;
+      max-width: calc(100% - 260px);
+    }
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;padding:12px 0;margin-bottom:18px;
+      border-bottom:1px solid var(--glass-2);
+    }
+    .topbar .left {display:flex;gap:12px;align-items:center}
+    .top-actions{display:flex;align-items:center;gap:10px}
+
+    /* HERO */
+    .hero{
+      margin-top:16px;margin-bottom:32px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.01), transparent);
+      padding:36px;border-radius:16px;box-shadow:var(--card-shadow);border:1px solid var(--glass-2);
+      display:flex;flex-direction:column;gap:18px;
+    }
+    .hero-row{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .hero h1{font-family:Poppins,Inter;font-size:48px;line-height:1.02}
+    .hero p{color:var(--muted);max-width:760px}
+
+    .cta-group{display:flex;gap:12px;align-items:center}
+    .btn {padding:12px 18px;border-radius:999px;font-weight:700;border:1px solid var(--glass-2);cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,#6ef0ff,#b45cff);color:#061220;border:none;box-shadow:0 8px 30px rgba(116,84,255,0.12)}
+    .btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)}
+
+    /* EQUALIZER (decorative) */
+    .eq {
+      display:flex;gap:8px;align-items:flex-end;justify-content:center;padding:26px 0;
+      flex-wrap:wrap;
+    }
+    .eq .bar{width:12px;border-radius:999px;background:#fff;opacity:0.9;box-shadow:0 4px 20px rgba(0,0,0,0.6)}
+    /* different heights / colors via inline style */
+
+    /* GRID CARDS */
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap:18px;
+      margin-top:18px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+      border-radius:14px;padding:18px;border:1px solid var(--glass-2);box-shadow:var(--card-shadow);
+    }
+    .card h3{font-size:16px;margin-bottom:8px}
+    .card p{color:var(--muted);font-size:13px}
+
+    /* FOOTER strip logos */
+    .logo-strip{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:16px;margin-top:32px;border-top:1px solid var(--glass-2)}
+    .logo-strip .item{flex:1;text-align:center;padding:12px;border-right:1px solid var(--glass-2)}
+    .logo-strip .item:last-child{border-right:none;color:var(--muted)}
+
+    /* responsive */
+    @media (max-width: 980px){
+      .sidebar{display:none}
+      .main{max-width:100%;padding:20px}
+      .hero h1{font-size:36px}
+    }
+    @media (max-width: 540px){
+      .hero h1{font-size:28px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
+
 <body>
-    <header class="sticky-nav">
-        <nav class="top-nav">
-            <div class="logo">Kaizen Automation Hub</div>
-            <ul class="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="policies.html">Policies</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div class="app">
 
-    <section class="hero-slider">
-        <div class="slides">
-            <div class="slide active" style="background-image: url('https://source.unsplash.com/1920x1080/?tech,ai');">
-                <div class="slide-content">
-                    <h1>AI Virtual Calling Agents for Every Business</h1>
-                    <p>Revolutionize your customer interactions with intelligent voice AI.</p>
-                    <a href="contact.html" class="cta-btn">Book Free Consultation</a>
-                </div>
-            </div>
-            <div class="slide" style="background-image: url('https://source.unsplash.com/1920x1080/?automation,workflow');">
-                <div class="slide-content">
-                    <h1>Automation Workflows: Zapier • Make • n8n • Node-RED</h1>
-                    <p>Streamline your operations with powerful no-code automations.</p>
-                    <a href="contact.html" class="cta-btn">Book Free Consultation</a>
-                </div>
-            </div>
-            <div class="slide" style="background-image: url('https://source.unsplash.com/1920x1080/?iot,sensors');">
-                <div class="slide-content">
-                    <h1>IoT + AI Solutions: Smart Energy • Water Systems • Sensors</h1>
-                    <p>Connect and optimize your physical world with smart tech.</p>
-                    <a href="contact.html" class="cta-btn">Book Free Consultation</a>
-                </div>
-            </div>
-            <div class="slide" style="background-image: url('https://source.unsplash.com/1920x1080/?integration,enterprise');">
-                <div class="slide-content">
-                    <h1>Enterprise-Grade Integrations: 50+ Platforms Supported</h1>
-                    <p>Seamless connectivity for your business ecosystem.</p>
-                    <a href="contact.html" class="cta-btn">Book Free Consultation</a>
-                </div>
-            </div>
-            <div class="slide" style="background-image: url('https://source.unsplash.com/1920x1080/?ai,transformation');">
-                <div class="slide-content">
-                    <h1>Build Anything with Kaizen — Your AI Transformation Partner</h1>
-                    <p>From idea to implementation, we're with you every step.</p>
-                    <a href="contact.html" class="cta-btn">Book Free Consultation</a>
-                </div>
-            </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Sidebar">
+      <div class="brand">KAIZEN</div>
+      <div class="brand-sub" style="color:var(--muted);font-size:13px;margin-top:4px">Automation Hub</div>
+
+      <nav aria-label="Main navigation">
+        <a class="nav-link active" href="#">Home</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="pricing.html">Pricing</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+        <a class="nav-link" href="policies.html">Policies</a>
+      </nav>
+
+      <div style="margin-top:auto">
+        <div style="padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-2)">
+          <div style="font-weight:700">Book Free Consultation</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Schedule a walkthrough</div>
+          <div style="margin-top:10px"><button class="btn btn-primary">Request</button></div>
         </div>
-    </section>
 
-    <section class="what-i-do">
-        <h2>Your Complete AI Automation Partner</h2>
-        <p>We specialize in Voice AI, Text AI, Virtual agents for sales, support, reminders, and booking. Our services include automation workflows, APIs, SaaS building, IoT solutions, and custom dashboards to transform your business.</p>
-    </section>
+        <div style="margin-top:12px;font-size:13px;color:var(--muted);text-align:center">© Kaizen</div>
+      </div>
+    </aside>
 
-    <section class="use-cases">
-        <h2>Virtual Calling Use Cases</h2>
-        <div class="grid">
-            <!-- Listed 50+ examples -->
-            <div class="card">Sales calls</div>
-            <div class="card">Lead qualification</div>
-            <div class="card">Customer support</div>
-            <div class="card">Emergency helpdesk</div>
-            <div class="card">Appointment scheduling</div>
-            <div class="card">COD verification</div>
-            <div class="card">Medicine reminders</div>
-            <div class="card">Clinic reminders</div>
-            <div class="card">Class notifications</div>
-            <div class="card">Payment reminders</div>
-            <div class="card">Delivery confirmation</div>
-            <div class="card">Restaurant booking</div>
-            <div class="card">Travel agent calls</div>
-            <div class="card">School announcements</div>
-            <div class="card">Fitness trainer reminders</div>
-            <div class="card">Real estate follow-ups</div>
-            <div class="card">Loan reminder calls</div>
-            <div class="card">HR screening calls</div>
-            <div class="card">Event RSVP calls</div>
-            <div class="card">Automated surveys</div>
-            <div class="card">Ticket booking confirmation</div>
-            <div class="card">Insurance claim follow-ups</div>
-            <div class="card">E-commerce order updates</div>
-            <div class="card">Subscription renewals</div>
-            <div class="card">Feedback collection</div>
-            <div class="card">Warranty reminders</div>
-            <div class="card">Product recall notifications</div>
-            <div class="card">Membership renewals</div>
-            <div class="card">Donation follow-ups</div>
-            <div class="card">Volunteer coordination</div>
-            <div class="card">Conference registrations</div>
-            <div class="card">Webinar reminders</div>
-            <div class="card">Job interview scheduling</div>
-            <div class="card">Maintenance alerts</div>
-            <div class="card">Utility bill reminders</div>
-            <div class="card">Tax filing reminders</div>
-            <div class="card">License renewal calls</div>
-            <div class="card">Health check-up reminders</div>
-            <div class="card">Pet care reminders</div>
-            <div class="card">Gardening service bookings</div>
-            <div class="card">Home cleaning scheduling</div>
-            <div class="card">Car service reminders</div>
-            <div class="card">Flight check-in notifications</div>
-            <div class="card">Hotel booking confirmations</div>
-            <div class="card">Rental property inquiries</div>
-            <div class="card">Legal consultation bookings</div>
-            <div class="card">Financial advisory calls</div>
-            <div class="card">Stock alert notifications</div>
-            <div class="card">Crowdfunding updates</div>
-            <div class="card">Podcast episode reminders</div>
-            <div class="card">Newsletter subscription confirmations</div>
-            <div class="card">Online course enrollments</div>
+    <!-- MAIN -->
+    <main class="main" role="main">
+      <header class="topbar" role="banner">
+        <div class="left">
+          <div style="font-weight:700;font-size:18px">Home</div>
+          <div style="color:var(--muted);font-size:13px;margin-left:12px">Welcome back</div>
         </div>
-    </section>
+        <div class="top-actions">
+          <button class="btn btn-outline">Docs</button>
+          <button class="btn btn-primary">Open Dashboard</button>
+        </div>
+      </header>
 
-    <section class="tools-portfolio">
-        <h2>Automation Tools Portfolio</h2>
-        <h3>Zapier / Make / n8n Alternatives</h3>
-        <div class="grid">
-            <div class="card">
-                <img src="assets/img/zapier.svg" alt="Zapier Icon">
-                <h4>Zapier</h4>
-                <p>Connect apps and automate workflows.</p>
-                <a href="#" class="cta-btn">View Projects</a>
+      <!-- HERO -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-row">
+          <div>
+            <h1 id="hero-title">Voice AI agents<br>for developers</h1>
+            <p>Kaizen delivers voice AI, text AI, virtual agents, automation workflows, APIs and dashboards — built for reliability and privacy-first deployments.</p>
+            <div class="cta-group" style="margin-top:14px">
+              <button class="btn btn-primary">Sign up</button>
+              <button class="btn btn-outline">Read the docs</button>
             </div>
-            <!-- Repeat for others: Make.com, n8n, Pabbly Connect, Integrately, IFTTT, Workato, Tray.io, Power Automate, UiPath Cloud, Automation Anywhere, Nintex, Tallyfy -->
-            <div class="card">
-                <img src="assets/img/make.svg" alt="Make Icon">
-                <h4>Make.com</h4>
-                <p>Visual automation platform.</p>
-                <a href="#" class="cta-btn">View Projects</a>
+          </div>
+
+          <div style="min-width:360px;display:flex;flex-direction:column;align-items:center;gap:12px">
+            <!-- Decorative equalizer and CTA -->
+            <div style="width:100%;background:transparent;padding:18px;border-radius:14px;display:flex;justify-content:center;align-items:center">
+              <div style="width:320px;height:120px;border-radius:999px;border:4px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02))">
+                <div style="font-weight:700">TALK TO KAIZEN</div>
+              </div>
             </div>
-            <!-- ... Add all similarly ... -->
-        </div>
-        <!-- Similar for other categories: Open-Source, No-Code, Enterprise, API/SaaS -->
-    </section>
 
-    <footer>
-        <div class="logo">Kaizen Automation Hub</div>
-        <ul class="quick-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="policies.html">Policies</a></li>
-        </ul>
-        <div class="social-links">
-            <!-- Add social icons -->
+            <div style="width:100%;margin-top:6px">
+              <div style="display:flex;gap:6px;align-items:center;justify-content:center" aria-hidden="true">
+                <!-- EQ bars - colors are decorative; you can change heights inline -->
+                <div class="eq" role="presentation">
+                  <div class="bar" style="height:22px;background:#ffd166"></div>
+                  <div class="bar" style="height:36px;background:#06d6a0"></div>
+                  <div class="bar" style="height:18px;background:#118ab2"></div>
+                  <div class="bar" style="height:28px;background:#ef476f"></div>
+                  <div class="bar" style="height:44px;background:#8a4fff"></div>
+                  <div class="bar" style="height:10px;background:#ffd166"></div>
+                  <div class="bar" style="height:30px;background:#06d6a0"></div>
+                  <div class="bar" style="height:20px;background:#118ab2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <p>Copyright © 2025 Kaizen Automation Hub</p>
-        <p>Built by Kaizen Automation Hub</p>
-    </footer>
 
-    <script src="assets/js/app.js"></script>
+        <!-- PLACEHOLDER: Preserve any top-hero content from your existing index -->
+        <!-- PASTE YOUR HERO-SPECIFIC MARKUP FROM index.html HERE -->
+      </section>
+
+      <!-- SERVICES GRID -->
+      <section aria-labelledby="services-title">
+        <h2 id="services-title" style="font-size:20px;margin-top:10px">Services</h2>
+        <p style="color:var(--muted);margin-top:6px">Voice AI, automation, chatbots and IoT solutions tailored for your stack.</p>
+
+        <!-- IMPORTANT: Paste your existing services grid markup into the div below so nothing is removed -->
+        <div style="margin-top:18px" id="services-container">
+          <!-- PASTE YOUR ORIGINAL .services-grid / .tool-grid / .case-card HTML HERE -->
+          <!-- Example: paste the block of cards from your original index.html so service names & descriptions are preserved -->
+          <!-- BEGIN PASTE AREA -->
+          <!-- (paste your markup exactly here) -->
+          <!-- END PASTE AREA -->
+        </div>
+      </section>
+
+      <!-- Example: Additional use-cases / accordion / contact -->
+      <section style="margin-top:26px">
+        <h3 style="font-size:18px">Virtual Calling Use Cases</h3>
+        <p style="color:var(--muted);margin-top:8px">50+ ready-to-deploy call flows and templates for every industry.</p>
+
+        <div class="grid" style="margin-top:12px">
+          <!-- If your site already has use-case cards, paste them into the services area above. Otherwise sample cards below -->
+          <div class="card">
+            <h3>Sales calls</h3>
+            <p>Template flow for sales calls via voice or SMS.</p>
+          </div>
+          <div class="card">
+            <h3>Lead qualification</h3>
+            <p>Template flow for lead qualification via voice or SMS.</p>
+          </div>
+          <div class="card">
+            <h3>Customer support</h3>
+            <p>Template flow for customer support via voice or SMS.</p>
+          </div>
+          <div class="card">
+            <h3>Appointment booking</h3>
+            <p>Automated bookings and reminders via voice & SMS.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLIENT LOGO STRIP -->
+      <div class="logo-strip" role="contentinfo">
+        <div class="item">UnityAI</div>
+        <div class="item">New York Life</div>
+        <div class="item">Intuit</div>
+        <div class="item">Delphi</div>
+        <div class="item">Housecall Pro</div>
+        <div class="item">Cherry</div>
+      </div>
+
+      <!-- Footer -->
+      <footer style="margin-top:18px;color:var(--muted);font-size:13px;padding-top:18px;border-top:1px solid var(--glass-2)">
+        <div style="max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px">
+          <div>© Kaizen Automation Hub</div>
+          <div style="color:var(--muted)">Built with care — All content preserved</div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Minimal JS for small interactions -->
+  <script>
+    // Simple helper: if you paste your nav links with .nav-link, we mark the current page as active
+    (function(){
+      const links = document.querySelectorAll('.nav-link');
+      links.forEach(l => {
+        l.addEventListener('click', (e) => {
+          links.forEach(x => x.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
